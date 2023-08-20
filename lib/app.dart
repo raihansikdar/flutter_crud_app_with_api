@@ -16,7 +16,7 @@ class CrudApp extends StatelessWidget {
               borderSide: BorderSide(color: Colors.red,width: 2),
             )
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey.shade200),
       ),
       home: const HomePage(),
     );

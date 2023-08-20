@@ -8,12 +8,13 @@ class AddNewProductScreen extends StatefulWidget {
 }
 
 class _AddNewProductScreenState extends State<AddNewProductScreen> {
+  final GlobalKey<FormState> _fromkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add New Product Screen"),
+        title: const Text("Add New Product Screen"),
       ),
       body: Container(
         height: _size.height*0.99,
@@ -21,52 +22,95 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding:  EdgeInsets.all(_size.height*.02),
-            child: Column(
-              children: [
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: "Product Name",
+            child: Form(
+              key: _fromkey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Product Name",
+                    ),
+                    validator: (String? value){
+                      if(value?.trim().isEmpty ?? true){
+                        return "Please Enter Product Name";
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                SizedBox(height: _size.height*.01),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: "Product Code",
+                  SizedBox(height: _size.height*.01),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Product Code",
+                    ),
+                    validator: (String? value){
+                      if(value?.trim().isEmpty ?? true){
+                        return "Please Enter Product Code";
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                SizedBox(height: _size.height*.01),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: "Unit Price",
+                  SizedBox(height: _size.height*.01),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Unit Price",
+                    ),
+                    validator: (String? value){
+                      if(value?.trim().isEmpty ?? true){
+                        return "Please Enter Unit Price";
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                SizedBox(height: _size.height*.01),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: "Quantity",
+                  SizedBox(height: _size.height*.01),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Quantity",
+                    ),
+                    validator: (String? value){
+                      if(value?.trim().isEmpty ?? true){
+                        return "Please Enter Quantity";
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                SizedBox(height: _size.height*.01),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: "Total Price",
+                  SizedBox(height: _size.height*.01),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Total Price",
+                    ),
+                    validator: (String? value){
+                      if(value?.trim().isEmpty ?? true){
+                        return "Please Enter Total Price";
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                SizedBox(height: _size.height*.01),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: "Image",
+                  SizedBox(height: _size.height*.01),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: "Image",
+                    ),
+                    validator: (String? value){
+                      if(value?.trim().isEmpty ?? true){
+                        return "Please Enter Image";
+                      }
+                      return null;
+                    },
                   ),
-                ),
-                SizedBox(height: _size.height*.02),
-                SizedBox(
-                  height: _size.height*0.06,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                      onPressed: (){},
-                      child: Text("Add Product",style: TextStyle(fontSize: _size.height*0.023),)),
-                )
-              ],
+                  SizedBox(height: _size.height*.02),
+                  SizedBox(
+                    height: _size.height*0.06,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        onPressed: (){
+                          if(_fromkey.currentState!.validate()){
+
+                          }
+                        },
+                        child: Text("Add Product",style: TextStyle(fontSize: _size.height*0.023),)),
+                  )
+                ],
+              ),
             ),
           ),
         ),
