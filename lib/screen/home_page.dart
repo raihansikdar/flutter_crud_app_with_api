@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_app_with_api/add_new_product_screen.dart';
-import 'package:flutter_crud_app_with_api/constant.dart';
+import 'package:flutter_crud_app_with_api/screen/add_new_product_screen.dart';
+import 'package:flutter_crud_app_with_api/utils/constant.dart';
 
 
 class HomePage extends StatelessWidget {
