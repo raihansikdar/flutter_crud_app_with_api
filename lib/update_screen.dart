@@ -17,7 +17,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
       appBar: AppBar(
         title: const Text("Update Screen"),
       ),
-      body: Container(
+      body: SizedBox(
         height: _size.height*0.99,
         width: _size.width*93,
         child: SingleChildScrollView(
