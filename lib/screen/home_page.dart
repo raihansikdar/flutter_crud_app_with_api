@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
     }
 
   }
-  // ----------------------- Get api call here---------------------------------
+  // ----------------------- Delete api call here---------------------------------
 
   Future<void> deleteRequest({required String id}) async{
     Response response = await get(Uri.parse("https://crud.teamrabbil.com/api/v1/DeleteProduct/$id"));
