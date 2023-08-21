@@ -34,13 +34,16 @@ class ConstantUtils {
           children: [
             ListTile(
               onTap: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                        const UpdateScreen()));
-
-              },
+                Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UpdateScreen(
+                          products: products[index], // full index dhore niye jaschi
+                        ),
+                      ),
+                    );
+                  },
               leading: const Icon(Icons.edit),
               title: const Text("Edit"),
             ),
