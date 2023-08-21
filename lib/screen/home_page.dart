@@ -19,6 +19,8 @@ class _HomePageState extends State<HomePage> {
 
   bool isLoading = false;
 
+// ----------------------- Get api call here---------------------------------
+
   Future<void> getRequest() async{
     isLoading = true;
     setState(() {});
@@ -27,21 +29,42 @@ class _HomePageState extends State<HomePage> {
     isLoading = false;
     setState(() {});
 
-  final Map<String,dynamic> decodedResponse = jsonDecode(response.body);
+    // log(response.statusCode.toString());
+    // log(response.body);
 
-   log(decodedResponse.length.toString());
-   log(decodedResponse['data'].length.toString());
+   final Map<String,dynamic> decodedResponse = jsonDecode(response.body);
 
-    if(response.statusCode == 200 ){
-      log(response.statusCode.toString());
-      log(response.body);
+    // log(decodedResponse.length.toString());
+    // log(decodedResponse['data'].length.toString());
 
+    if(response.statusCode == 200 && decodedResponse['status'] == 'success'){
+      products.clear();
       for (var jsonData in decodedResponse['data']){
         products.add(ProductsModel.toJson(jsonData));
       }
     }
 
   }
+  // ----------------------- Get api call here---------------------------------
+
+  Future<void> deleteRequest({required String id}) async{
+    Response response = await get(Uri.parse("https://crud.teamrabbil.com/api/v1/DeleteProduct/$id"));
+
+    log(" delete : ${response.statusCode}");
+    final Map<String,dynamic> decodedResponse = jsonDecode(response.body);
+
+    if(response.statusCode == 200 && decodedResponse['status'] == 'success'){
+      getRequest();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Delete successful!!"),
+          ),
+        );
+      }
+      }
+    }
+
 
   @override
   void initState() {
@@ -55,6 +78,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("CRUD App"),
+        actions: [
+          IconButton(onPressed: (){
+            getRequest();
+          }, icon: const Icon(Icons.refresh))
+        ],
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -63,15 +91,26 @@ class _HomePageState extends State<HomePage> {
           itemBuilder: (context,index){
             return ListTile(
               onLongPress: (){
-                ConstantUtils.myAlertDialog(context);
+              //  ConstantUtils.myAlertDialog(context);
+                ConstantUtils.myAlertDialog(context, index, deleteRequest, products);
+                /*
+                1. index: This is the index of the selected "ListTile" in your "ListView". It's used to identify which product's data
+                 should be processed in the dialog.
+
+                2. deleteRequest: This is a reference to the "deleteRequest function" defined in your HomePage class. It's passed to the
+                 dialog so that when the user selects the "Delete" option, the dialog can call this function to perform the deletion.
+
+                3. products: This is a list of "ProductsModel objects" containing your product data. It's needed so that the dialog can access
+                 the data of the selected product (like its ID) to perform the required action.
+                 */
               },
               leading: Image.network(
-                products[index].image,
+                products[index].image ?? '',
                 width: 50,
                 errorBuilder:(_, __, ___){
                   return const Icon(Icons.image);
                 },),
-              title:  Text(products[index].productName),
+              title:  Text(products[index].productName ?? ''),
               subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -94,7 +133,7 @@ class _HomePageState extends State<HomePage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const AddNewProductScreen()));
+                  builder: (context) =>  const AddNewProductScreen()));
         },
         child: const Icon(Icons.add),
       ),

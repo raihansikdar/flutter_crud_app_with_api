@@ -1,4 +1,10 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_crud_app_with_api/models/Products_model.dart';
+import 'package:http/http.dart';
 
 class AddNewProductScreen extends StatefulWidget {
   const AddNewProductScreen({Key? key}) : super(key: key);
@@ -8,7 +14,70 @@ class AddNewProductScreen extends StatefulWidget {
 }
 
 class _AddNewProductScreenState extends State<AddNewProductScreen> {
+  final TextEditingController _productNameController = TextEditingController();
+  final TextEditingController _productCodeController = TextEditingController();
+  final TextEditingController _unitPriceController = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _totalPriceController = TextEditingController();
+  final TextEditingController _imageController = TextEditingController();
+
   final GlobalKey<FormState> _fromkey = GlobalKey<FormState>();
+  bool isProgress = false;
+
+  Future<void> addProduct()async {
+    isProgress = true;
+    setState(() {});
+
+    final Map<String,dynamic> requestBody ={
+      "Img":_imageController.text.trim(),
+      "ProductCode":_productCodeController.text.trim(),
+      "ProductName":_productNameController.text.trim(),
+      "Qty":_quantityController.text.trim(),
+      "TotalPrice":_totalPriceController.text.trim(),
+      "UnitPrice":_unitPriceController.text.trim()
+    };
+
+    Response response = await post(
+      Uri.parse("https://crud.teamrabbil.com/api/v1/CreateProduct"),
+      headers: {'Content-type': 'application/json'},
+      body: jsonEncode(requestBody)
+    );
+
+    isProgress = false;
+    setState(() {});
+
+    log("=====>${response.statusCode}");
+
+    if(response.statusCode ==200){
+      final Map<String,dynamic> decodedResponseBody = jsonDecode(response.body);
+      log("***********=>$decodedResponseBody");
+      if(decodedResponseBody['status'] == 'success'){
+        _productNameController.clear();
+        _productCodeController.clear();
+        _unitPriceController.clear();
+        _quantityController.clear();
+        _totalPriceController.clear();
+        _imageController.clear();
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("New data Add successful!!"),
+            ),
+          );
+        }
+      }else{
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("New Product add Failed"),
+            ),
+          );
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.sizeOf(context);
@@ -16,7 +85,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
       appBar: AppBar(
         title: const Text("Add New Product Screen"),
       ),
-      body: Container(
+      body: SizedBox(
         height: _size.height*0.99,
         width: _size.width*93,
         child: SingleChildScrollView(
@@ -27,7 +96,8 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
               child: Column(
                 children: [
                   TextFormField(
-                    decoration: const InputDecoration(
+                    controller: _productNameController,
+                    decoration:  const InputDecoration(
                       hintText: "Product Name",
                     ),
                     validator: (String? value){
@@ -39,6 +109,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                   ),
                   SizedBox(height: _size.height*.01),
                   TextFormField(
+                    controller: _productCodeController,
                     decoration: const InputDecoration(
                       hintText: "Product Code",
                     ),
@@ -51,6 +122,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                   ),
                   SizedBox(height: _size.height*.01),
                   TextFormField(
+                    controller: _unitPriceController,
                     decoration: const InputDecoration(
                       hintText: "Unit Price",
                     ),
@@ -63,6 +135,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                   ),
                   SizedBox(height: _size.height*.01),
                   TextFormField(
+                    controller: _quantityController,
                     decoration: const InputDecoration(
                       hintText: "Quantity",
                     ),
@@ -75,6 +148,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                   ),
                   SizedBox(height: _size.height*.01),
                   TextFormField(
+                    controller: _totalPriceController,
                     decoration: const InputDecoration(
                       hintText: "Total Price",
                     ),
@@ -87,6 +161,7 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                   ),
                   SizedBox(height: _size.height*.01),
                   TextFormField(
+                    controller: _imageController,
                     decoration: const InputDecoration(
                       hintText: "Image",
                     ),
@@ -104,10 +179,20 @@ class _AddNewProductScreenState extends State<AddNewProductScreen> {
                     child: ElevatedButton(
                         onPressed: (){
                           if(_fromkey.currentState!.validate()){
-
+                            addProduct();
                           }
                         },
-                        child: Text("Add Product",style: TextStyle(fontSize: _size.height*0.023),)),
+                        child: isProgress
+                            ? const Center(
+                                child: CupertinoActivityIndicator(
+                                radius: 15,
+                                color: Colors.white,
+                              ))
+                            : Text(
+                                "Add Product",
+                                style:
+                                    TextStyle(fontSize: _size.height * 0.023),
+                              )),
                   )
                 ],
               ),

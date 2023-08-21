@@ -1,5 +1,5 @@
 class ProductsModel {
-  final String id, productName, productCode, image, unitPrice, quantity,
+  final String? id, productName, productCode, image, unitPrice, quantity,
       totalPrice, createdAt;
 
   ProductsModel(this.id, this.productName, this.productCode, this.image, this.unitPrice, this.quantity, this.totalPrice, this.createdAt);
