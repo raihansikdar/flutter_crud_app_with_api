@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_app_with_api/screen/update_screen.dart';
+import 'package:flutter_crud_app_with_api/views/update_screen.dart';
+
 
 class ConstantUtils {
   ConstantUtils._();

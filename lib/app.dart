@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_crud_app_with_api/screen/home_page.dart';
+import 'package:flutter_crud_app_with_api/views/home_page.dart';
+
 
 class CrudApp extends StatelessWidget {
   const CrudApp({super.key});
@@ -18,7 +19,7 @@ class CrudApp extends StatelessWidget {
         ),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey.shade200),
       ),
-      home: const HomePage(),
+      home:  HomePage(),
     );
   }
 }
