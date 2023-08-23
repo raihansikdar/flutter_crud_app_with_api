@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (context, index) {
               return ListTile(
                 onLongPress: () {
-                  ConstantUtils.myAlertDialog(context);
+                  ConstantUtils.myAlertDialog(context,productId: _homeController.productModel.data?[index].sId ?? '');
                 },
                 leading: Image.network(
                   _homeController.productModel.data?[index].img ?? '',
