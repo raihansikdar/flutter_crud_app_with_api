@@ -53,7 +53,7 @@ class ConstantUtils {
                 Navigator.pop(context); // Close the dialog
                 // Get the product's ID
                 String? productId = products[index].id; // Replace 'id' with the actual property name
-
+                 print(productId);
                 // Call the deleteRequest function passed as a parameter
                 await deleteCallback(id: productId);
                 //await deleteRequest(id: productId); same jinish
