@@ -32,7 +32,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
     super.initState();
   }
   final GlobalKey<FormState> _fromkey = GlobalKey<FormState>();
-  final UpdateProductController _updateProductController = Get.put(UpdateProductController());
+  final UpdateProductController _updateProductController = Get.find<UpdateProductController>();
 
   @override
   Widget build(BuildContext context) {

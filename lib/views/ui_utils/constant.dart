@@ -5,8 +5,8 @@ import 'package:flutter_crud_app_with_api/view_model/home_controller.dart';
 import 'package:flutter_crud_app_with_api/views/update_screen.dart';
 import 'package:get/get.dart';
 
-final DeleteProductController _deleteProductController =Get.put(DeleteProductController());
-final HomeController _homeController = Get.put(HomeController());
+final DeleteProductController _deleteProductController = Get.find<DeleteProductController>();
+final HomeController _homeController = Get.find<HomeController>();
 class ConstantUtils {
   ConstantUtils._();
  static void myAlertDialog(BuildContext context, {required String productId,required Data? productIndex}){
