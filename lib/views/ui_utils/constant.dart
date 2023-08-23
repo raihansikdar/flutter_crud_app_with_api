@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_crud_app_with_api/models/product_model.dart';
 import 'package:flutter_crud_app_with_api/view_model/delete_product_controller.dart';
 import 'package:flutter_crud_app_with_api/view_model/home_controller.dart';
 import 'package:flutter_crud_app_with_api/views/update_screen.dart';
@@ -8,7 +9,7 @@ final DeleteProductController _deleteProductController =Get.put(DeleteProductCon
 final HomeController _homeController = Get.put(HomeController());
 class ConstantUtils {
   ConstantUtils._();
- static void myAlertDialog(BuildContext context, {required String productId}){
+ static void myAlertDialog(BuildContext context, {required String productId,required Data? productIndex}){
     showDialog(context: context, builder: (context) {
       return AlertDialog(
         titlePadding: const EdgeInsets.only(left: 16.0),
@@ -30,13 +31,14 @@ class ConstantUtils {
           children: [
             ListTile(
               onTap: (){
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                        const UpdateScreen()));
-
-              },
+                Navigator.pop(context);
+                 Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  UpdateScreen(products: productIndex,),
+                      ),
+                    );
+                  },
               leading: const Icon(Icons.edit),
               title: const Text("Edit"),
             ),
