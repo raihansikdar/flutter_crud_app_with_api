@@ -77,10 +77,11 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const AddNewProductScreen()));
+          Get.to(()=>const AddNewProductScreen(),transition:sendTransition);
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => const AddNewProductScreen()));
         },
         child: const Icon(Icons.add),
       ),

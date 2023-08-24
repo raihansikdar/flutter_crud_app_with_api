@@ -31,13 +31,15 @@ class ConstantUtils {
           children: [
             ListTile(
               onTap: (){
-                Navigator.pop(context);
-                 Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>  UpdateScreen(products: productIndex,),
-                      ),
-                    );
+                Get.back();
+                Get.to(()=>UpdateScreen(products: productIndex),transition: sendTransition);
+                // Navigator.pop(context);
+                //  Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //         builder: (context) =>  UpdateScreen(products: productIndex,),
+                //       ),
+                //     );
                   },
               leading: const Icon(Icons.edit),
               title: const Text("Edit"),
@@ -45,21 +47,18 @@ class ConstantUtils {
             const Divider(height: 0),
             ListTile(
               onTap: (){
-                Navigator.pop(context);
+                Get.back();
                 _deleteProductController.deleteRequest(productId: productId).then((value) {
                   if(value == true){
                     _homeController.getRequest();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Delete successful!!"),
-                      ),
-                    );
+                    Get.snackbar("Success", "Delete successful!!",snackPosition: SnackPosition.BOTTOM);
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   const SnackBar(
+                    //     content: Text("Delete successful!!"),
+                    //   ),
+                    // );
                   }else{
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Delete failed!!"),
-                      ),
-                    );
+                    Get.snackbar("Failed", "Delete failed",snackPosition: SnackPosition.BOTTOM);
                   }
                 });
               },
@@ -73,3 +72,5 @@ class ConstantUtils {
     });
   }
 }
+
+const sendTransition =Transition.rightToLeft;
