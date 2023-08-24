@@ -14,7 +14,7 @@ class DeleteProductController extends GetxController{
     final NetworkResponse response = await NetworkCaller().getRequest(Urls.deleteProductEndPoint(id:productId));
 
     log(" delete : ${response.statusCode}");
-    if(response.isSuccess && response.statusCode == 200){
+    if(response.isSuccess && response.statusCode == 200) {
 
       return true;
     }else{
