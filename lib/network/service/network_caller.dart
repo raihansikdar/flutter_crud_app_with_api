@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter_crud_app_with_api/models/product_model.dart';
 import 'package:flutter_crud_app_with_api/network/service/network_response.dart';
 import 'package:http/http.dart';
 

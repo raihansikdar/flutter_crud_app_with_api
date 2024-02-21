@@ -90,7 +90,7 @@
 //   }
 // }
 
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_crud_app_with_api/view_model/home_controller.dart';
 import 'package:flutter_crud_app_with_api/views/add_new_product_screen.dart';

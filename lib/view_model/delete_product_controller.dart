@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter_crud_app_with_api/models/product_model.dart';
 import 'package:flutter_crud_app_with_api/network/network_component/api_urls.dart';
 import 'package:flutter_crud_app_with_api/network/service/network_caller.dart';
 import 'package:flutter_crud_app_with_api/network/service/network_response.dart';
